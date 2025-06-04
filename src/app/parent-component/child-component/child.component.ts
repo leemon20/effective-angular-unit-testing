@@ -1,9 +1,10 @@
 import { Component, input, output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { Product } from '@aut/model/product';
 
 @Component({
   selector: 'child-component',
-  imports: [],
+  imports: [MatButtonModule],
   templateUrl: './child.component.html',
   styleUrl: './child.component.scss',
 })

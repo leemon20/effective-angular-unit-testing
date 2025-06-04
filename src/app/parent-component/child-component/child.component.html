@@ -1,3 +1,7 @@
 @for (product of products(); track $index) {
-  <button (click)="productSelected.emit(product)" [class.selected]="product.selected">{{ product.name }}</button>
+  @if (product.selected) {
+    <button mat-flat-button (click)="productSelected.emit(product)">{{ product.name }}</button>
+  } @else {
+    <button mat-button (click)="productSelected.emit(product)">{{ product.name }}</button>
+  }
 }
