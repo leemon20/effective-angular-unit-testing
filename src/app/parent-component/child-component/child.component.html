@@ -1,0 +1,3 @@
+@for (product of products(); track $index) {
+  <div (click)="productSelected.emit(product)">{{ product.name }}</div>
+}

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ParentComponentComponent } from './parent-component.component';
+import { ParentComponentComponent } from './parent.component';
 
 describe('ParentComponentComponent', () => {
   let component: ParentComponentComponent;
