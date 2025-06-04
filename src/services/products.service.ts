@@ -10,4 +10,8 @@ export class ProductsService {
     { name: 'Product 2', selected: false },
     { name: 'Product 3', selected: false },
   ]);
+
+  public markAsSelected(product: Product): void {
+    this.products.update((products) => products.map((p) => ({ ...p, selected: p === product ? true : false })));
+  }
 }

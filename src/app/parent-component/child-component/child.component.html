@@ -1,3 +1,3 @@
 @for (product of products(); track $index) {
-  <div (click)="productSelected.emit(product)">{{ product.name }}</div>
+  <button (click)="productSelected.emit(product)" [class.selected]="product.selected">{{ product.name }}</button>
 }

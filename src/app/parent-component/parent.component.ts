@@ -12,5 +12,9 @@ import { ChildComponent } from './child-component/child.component';
 export class ParentComponent {
   readonly productsService = inject(ProductsService);
 
-  public onProductSelected(value: Product): void {}
+  public onProductSelected(product: Product): void {
+    this.productsService.markAsSelected(product);
+
+    console.log(this.onProductSelected.name, product, this.productsService.products());
+  }
 }
