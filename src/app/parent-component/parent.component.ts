@@ -9,7 +9,7 @@ import { ChildComponent } from './child-component/child.component';
   templateUrl: './parent.component.html',
   styleUrl: './parent.component.scss',
 })
-export class ParentComponentComponent {
+export class ParentComponent {
   readonly productsService = inject(ProductsService);
 
   public onProductSelected(value: Product): void {}
