@@ -1,3 +1,4 @@
+<h1>{{ translationService.translate('child') }}</h1>
 @for (product of products(); track $index) {
   @if (product.selected) {
     <button mat-flat-button (click)="productSelected.emit(product)">{{ product.name }}</button>
