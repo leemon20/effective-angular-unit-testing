@@ -1,8 +1,14 @@
 <h1>{{ translationService.translate('child') }}</h1>
 @for (product of products(); track $index) {
   @if (product.selected) {
-    <button mat-flat-button (click)="productSelected.emit(product)">{{ product.name }}</button>
+    <button data-test="product-selected" mat-flat-button (click)="productSelected.emit(product)">
+      {{ product.name }}
+    </button>
   } @else {
-    <button mat-button (click)="productSelected.emit(product)">{{ product.name }}</button>
+    <button data-test="product" mat-button (click)="productSelected.emit(product)">{{ product.name }}</button>
   }
+}
+
+@if (products().length === 0) {
+  <div data-test="no-products">{{ translationService.translate('child.no-products') }}</div>
 }

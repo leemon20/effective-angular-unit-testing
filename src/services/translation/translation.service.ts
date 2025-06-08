@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class TranslationService {
   private translations = {
     child: 'Child',
+    'child.no-products': 'No products',
   };
 
   translate(key: keyof typeof this.translations): string {
