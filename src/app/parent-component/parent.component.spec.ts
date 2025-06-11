@@ -5,6 +5,9 @@ import { By } from '@angular/platform-browser';
 import { ProductsService } from '@aut/services/products/products.service';
 import { ParentComponent } from './parent.component';
 
+// Allows creating a mock of a service by overriding
+// Signals with WritableSignals and functions with jasmine spies
+// so that the behaviour of those can be controlled during a test
 type Mock<T> = {
   [K in keyof T]: T[K] extends Signal<infer R>
     ? WritableSignal<R>
