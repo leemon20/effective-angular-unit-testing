@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { NgClass } from '@angular/common';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform, signal, Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TranslationService } from '@aut/services/translation/translation.service';
@@ -27,7 +28,7 @@ describe('ChildComponent', () => {
     })
       .overrideComponent(ChildComponent, {
         set: {
-          imports: [MockTitleCasePipe, MockHyphenatePipe],
+          imports: [NgClass, MockTitleCasePipe, MockHyphenatePipe],
           providers: [{ provide: TranslationService, useValue: translationServiceMock }],
           schemas: [NO_ERRORS_SCHEMA],
         },
@@ -81,15 +82,24 @@ describe('ChildComponent', () => {
     fixture.componentRef.setInput('products', productsInput());
     fixture.detectChanges();
 
-    const unselected = fixture.debugElement.queryAll(By.css('[data-test="product"]'));
-    const selected = fixture.debugElement.queryAll(By.css('[data-test="product-selected"]'));
+    const productEls = fixture.debugElement.queryAll(By.css('[data-test*="product"]'));
 
-    expect(unselected.length).toBe(1);
-    expect(selected.length).toBe(2);
+    // count
+    expect(productEls.length).toBe(3);
 
-    expect(selected[0].nativeElement.textContent.trim()).toBe(`titlecase: ${productsInput()[0].name}`);
-    expect(unselected[0].nativeElement.textContent.trim()).toBe(`hyphenate: ${productsInput()[1].name}`);
-    expect(selected[1].nativeElement.textContent.trim()).toBe(`titlecase: ${productsInput()[2].name}`);
+    // pipes
+    expect(productEls[0].nativeElement.textContent.trim()).toBe(`titlecase: ${productsInput()[0].name}`);
+    expect(productEls[1].nativeElement.textContent.trim()).toBe(`hyphenate: ${productsInput()[1].name}`);
+    expect(productEls[2].nativeElement.textContent.trim()).toBe(`titlecase: ${productsInput()[2].name}`);
+
+    // [ngClass] and [class.<...>]
+    expect(productEls[0].nativeElement.classList.contains('even')).toBeTrue();
+    expect(productEls[1].nativeElement.classList.contains('odd')).toBeTrue();
+    expect(productEls[2].nativeElement.classList.contains('even')).toBeTrue();
+
+    // directives
+    expect(productEls[0].properties['appHighlight']).toBe('purple');
+    expect(productEls[2].properties['appHighlight']).toBe('purple');
   });
 
   it('should report product selection', () => {

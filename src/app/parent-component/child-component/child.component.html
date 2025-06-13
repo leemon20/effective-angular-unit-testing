@@ -1,11 +1,23 @@
 <h1>{{ translationService.translate('child') }}</h1>
 @for (product of products(); track $index) {
   @if (product.selected) {
-    <button data-test="product-selected" mat-flat-button (click)="productSelected.emit(product)">
+    <button
+      data-test="product-selected"
+      [ngClass]="{ even: $index % 2 === 0, odd: $index % 2 === 1 }"
+      [appHighlight]="'purple'"
+      mat-flat-button
+      (click)="productSelected.emit(product)"
+    >
       {{ product.name | titlecase }}
     </button>
   } @else {
-    <button data-test="product" mat-button (click)="productSelected.emit(product)">
+    <button
+      data-test="product"
+      [class.even]="$index % 2 === 0"
+      [class.odd]="$index % 2 === 1"
+      mat-button
+      (click)="productSelected.emit(product)"
+    >
       {{ product.name | hyphenate }}
     </button>
   }
