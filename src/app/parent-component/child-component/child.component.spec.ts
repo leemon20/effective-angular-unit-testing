@@ -74,6 +74,7 @@ describe('ChildComponent', () => {
   });
 
   it('should render products', () => {
+    // mix of selected and unselected products
     const productsInput = signal(products.map((product, index) => ({ ...product, selected: index % 2 === 0 })));
 
     translationServiceMock.translate.withArgs('child').and.returnValue('[CHILD]');
