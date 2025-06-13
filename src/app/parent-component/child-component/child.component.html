@@ -2,10 +2,12 @@
 @for (product of products(); track $index) {
   @if (product.selected) {
     <button data-test="product-selected" mat-flat-button (click)="productSelected.emit(product)">
-      {{ product.name }}
+      {{ product.name | titlecase }}
     </button>
   } @else {
-    <button data-test="product" mat-button (click)="productSelected.emit(product)">{{ product.name }}</button>
+    <button data-test="product" mat-button (click)="productSelected.emit(product)">
+      {{ product.name | hyphenate }}
+    </button>
   }
 }
 

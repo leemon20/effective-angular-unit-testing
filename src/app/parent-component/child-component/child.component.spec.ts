@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NO_ERRORS_SCHEMA, signal } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform, signal, Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TranslationService } from '@aut/services/translation/translation.service';
 import { ChildComponent } from './child.component';
@@ -11,20 +11,23 @@ describe('ChildComponent', () => {
   let translationServiceMock: jasmine.SpyObj<TranslationService>;
 
   const products = [
-    { name: 'Product 1', selected: false },
-    { name: 'Product 2', selected: false },
-    { name: 'Product 3', selected: false },
+    { name: 'product 1', selected: false },
+    { name: 'product 2', selected: false },
+    { name: 'product 3', selected: false },
   ];
 
   beforeEach(async () => {
     translationServiceMock = jasmine.createSpyObj(TranslationService, ['translate']);
+
+    const MockTitleCasePipe = mockPipe('titlecase', (value: string) => `titlecase: ${value}`);
+    const MockHyphenatePipe = mockPipe('hyphenate', (value: string) => `hyphenate: ${value}`);
 
     await TestBed.configureTestingModule({
       imports: [ChildComponent],
     })
       .overrideComponent(ChildComponent, {
         set: {
-          imports: [],
+          imports: [MockTitleCasePipe, MockHyphenatePipe],
           providers: [{ provide: TranslationService, useValue: translationServiceMock }],
           schemas: [NO_ERRORS_SCHEMA],
         },
@@ -84,9 +87,9 @@ describe('ChildComponent', () => {
     expect(unselected.length).toBe(1);
     expect(selected.length).toBe(2);
 
-    expect(selected[0].nativeElement.textContent.trim()).toBe(productsInput()[0].name);
-    expect(unselected[0].nativeElement.textContent.trim()).toBe(productsInput()[1].name);
-    expect(selected[1].nativeElement.textContent.trim()).toBe(productsInput()[2].name);
+    expect(selected[0].nativeElement.textContent.trim()).toBe(`titlecase: ${productsInput()[0].name}`);
+    expect(unselected[0].nativeElement.textContent.trim()).toBe(`hyphenate: ${productsInput()[1].name}`);
+    expect(selected[1].nativeElement.textContent.trim()).toBe(`titlecase: ${productsInput()[2].name}`);
   });
 
   it('should report product selection', () => {
@@ -112,3 +115,17 @@ describe('ChildComponent', () => {
     expect(emitSpy).toHaveBeenCalledOnceWith(productsInput()[1]);
   });
 });
+
+export function mockPipe(pipeName: string, transform: PipeTransform['transform']): Type<PipeTransform> {
+  @Pipe({
+    name: pipeName,
+    standalone: true,
+  })
+  class MockPipe implements PipeTransform {
+    transform(value: any, ...args: any[]): any {
+      return transform(value, ...args);
+    }
+  }
+
+  return MockPipe;
+}

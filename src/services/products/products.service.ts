@@ -6,9 +6,9 @@ import { Product } from '../../model/product';
 })
 export class ProductsService {
   readonly #products = signal<Product[]>([
-    { name: 'Product 1', selected: false },
-    { name: 'Product 2', selected: false },
-    { name: 'Product 3', selected: false },
+    { name: 'product 1', selected: false },
+    { name: 'product 2', selected: false },
+    { name: 'product 3', selected: false },
   ]);
 
   public readonly products = computed(() => this.#products());
