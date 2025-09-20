@@ -11,9 +11,9 @@ import { ChildComponent } from './child-component/child.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ParentComponent {
-  readonly productsService = inject(ProductsService);
+  protected readonly productsService = inject(ProductsService);
 
-  public onProductSelected(product: Product): void {
+  protected onProductSelected(product: Product): void {
     this.productsService.toggleSelection(product);
   }
 }

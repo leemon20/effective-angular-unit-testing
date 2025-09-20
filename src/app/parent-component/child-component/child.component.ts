@@ -14,7 +14,7 @@ import { TranslationService } from '@aut/services/translation/translation.servic
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChildComponent {
-  public translationService = inject(TranslationService);
+  protected translationService = inject(TranslationService);
 
   public products = input.required<Product[]>();
   public productSelected = output<Product>();
